@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             fnameBox = new TextBox();
             shadow = new Label();
             hedgehog = new Label();
@@ -50,6 +51,11 @@
             grosssaladBox = new TextBox();
             submission = new Button();
             outputBox = new ListBox();
+            chooseFile = new Button();
+            pathDis = new Label();
+            savvy = new Button();
+            lode = new Button();
+            X = new Button();
             SuspendLayout();
             // 
             // fnameBox
@@ -245,11 +251,64 @@
             outputBox.Size = new Size(400, 214);
             outputBox.TabIndex = 21;
             // 
+            // chooseFile
+            // 
+            chooseFile.Location = new Point(550, 50);
+            chooseFile.Name = "chooseFile";
+            chooseFile.Size = new Size(90, 25);
+            chooseFile.TabIndex = 22;
+            chooseFile.Text = "Choose File...";
+            chooseFile.UseVisualStyleBackColor = true;
+            chooseFile.Click += chooseFile_Click;
+            // 
+            // pathDis
+            // 
+            pathDis.AutoSize = true;
+            pathDis.Location = new Point(550, 80);
+            pathDis.Name = "pathDis";
+            pathDis.Size = new Size(0, 15);
+            pathDis.TabIndex = 23;
+            // 
+            // savvy
+            // 
+            savvy.Location = new Point(605, 120);
+            savvy.Name = "savvy";
+            savvy.Size = new Size(40, 25);
+            savvy.TabIndex = 25;
+            savvy.Text = "Save";
+            savvy.UseVisualStyleBackColor = true;
+            savvy.Click += savvy_Click;
+            // 
+            // lode
+            // 
+            lode.Location = new Point(550, 120);
+            lode.Name = "lode";
+            lode.Size = new Size(45, 25);
+            lode.TabIndex = 27;
+            lode.Text = "Load";
+            lode.UseVisualStyleBackColor = true;
+            lode.Click += lode_Click;
+            // 
+            // X
+            // 
+            X.Image = (Image)resources.GetObject("X.Image");
+            X.Location = new Point(738, 12);
+            X.Name = "X";
+            X.Size = new Size(50, 50);
+            X.TabIndex = 28;
+            X.UseVisualStyleBackColor = true;
+            X.Click += X_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(X);
+            Controls.Add(lode);
+            Controls.Add(savvy);
+            Controls.Add(pathDis);
+            Controls.Add(chooseFile);
             Controls.Add(outputBox);
             Controls.Add(submission);
             Controls.Add(ewww);
@@ -302,5 +361,11 @@
         private TextBox grosssaladBox;
         private Button submission;
         private ListBox outputBox;
+        private Button chooseFile;
+        private Label pathDis;
+        private Button savvy;
+        private Button deli;
+        private Button lode;
+        private Button X;
     }
 }

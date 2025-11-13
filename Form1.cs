@@ -2,6 +2,7 @@ namespace Lab5
 {
     public partial class Form1 : Form
     {
+        StreamWriter fileWriter;
         public Form1()
         {
             InitializeComponent();
@@ -16,6 +17,26 @@ namespace Lab5
             grosssaladBox.Hide();
             batman.Hide();
             gordonBox.Hide();
+
+            //
+
+            fnameBox.Enabled = false;
+            lnameBox.Enabled = false;
+            ssnBox.Enabled = false;
+
+            radioButton1.Enabled = false;
+            radioButton2.Enabled = false;
+            radioButton3.Enabled = false;
+            submission.Enabled = false;
+
+            //
+
+
+            savvy.Enabled = false;
+            savvy.Hide();
+
+            lode.Enabled = false;
+            lode.Hide();
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -82,13 +103,30 @@ namespace Lab5
         {
             if (fnameBox != null & lnameBox != null & ssnBox != null)
             {
+                string firstName = fnameBox.Text;
+                string lastName = lnameBox.Text;
+                string SSN = ssnBox.Text;
+                string weekSalary = weeksaladBox.Text;
+                string mage = wageBox.Text;
+                string hour = hourBox.Text;
+                string gross = grosssaladBox.Text;
+                string commission = gordonBox.Text;
+
                 if (radioButton1.Checked)
                 {
                     if (weeksaladBox != null)
                     {
+                        //ADD VALIDATION SO I WON'T CRASH WHEN NON-NUMBERS ARE INPUT
                         SalaryEmployee worker1 = new SalaryEmployee(fnameBox.Text, lnameBox.Text, ssnBox.Text, Convert.ToDecimal(weeksaladBox.Text));
                         double weeklySalary = Convert.ToDouble(weeksaladBox.Text);
                         outputBox.Items.Add(worker1.ToString());
+                        fileWriter.WriteLine(firstName + "/" + lastName + "/" + SSN + "/" + weekSalary);
+                        fnameBox.Text = "";
+                        lnameBox.Text = "";
+                        ssnBox.Text = "";
+                        weeksaladBox.Text = "";
+                        fnameBox.Focus();
+                        savvy.Enabled = true;
                     }
                     else
                     {
@@ -103,6 +141,14 @@ namespace Lab5
                         double hoursWorked = Convert.ToDouble(hourBox.Text);
                         double wage = Convert.ToDouble(wageBox.Text);
                         outputBox.Items.Add(worker2.ToString());
+                        fileWriter.WriteLine(firstName + "/" + lastName + "/" + SSN + "/" + mage + "/" + hour);
+                        fnameBox.Text = "";
+                        lnameBox.Text = "";
+                        ssnBox.Text = "";
+                        wageBox.Text = "";
+                        hourBox.Text = "";
+                        fnameBox.Focus();
+                        savvy.Enabled = true;
                     }
                     else
                     {
@@ -117,6 +163,14 @@ namespace Lab5
                         double grossSales = Convert.ToDouble(grosssaladBox.Text);
                         double commissionRate = Convert.ToDouble(gordonBox.Text);
                         outputBox.Items.Add(worker3.ToString());
+                        fileWriter.WriteLine(firstName + "/" + lastName + "/" + SSN + "/" + gross + "/" + commission);
+                        fnameBox.Text = "";
+                        lnameBox.Text = "";
+                        ssnBox.Text = "";
+                        grosssaladBox.Text = "";
+                        gordonBox.Text = "";
+                        fnameBox.Focus();
+                        savvy.Enabled = true;
                     }
                     else
                     {
@@ -128,6 +182,124 @@ namespace Lab5
                     MessageBox.Show("Please enter the first and last name, the SSN, and select an employee type.");
                 }
             }
+        }
+
+        private void chooseFile_Click(object sender, EventArgs e)
+        {
+            DialogResult result;
+            string ileName;
+
+            var ileChose = new SaveFileDialog();
+
+            ileChose.CheckFileExists = false;
+            result = ileChose.ShowDialog();
+            ileName = ileChose.FileName;
+
+            pathDis.Text = ileName;
+
+            if (result == DialogResult.OK)
+            {
+                if (string.IsNullOrEmpty(ileName))
+                {
+                    MessageBox.Show("Invalid File Name or Path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    try
+                    {
+                        FileStream stream = new FileStream(ileName, FileMode.Append, FileAccess.Write);
+                        fileWriter = new StreamWriter(stream);
+
+
+                        //savvy.Enabled = true;
+                        savvy.Show();
+                        lode.Enabled = true;
+                        lode.Show();
+
+                        chooseFile.Enabled = false;
+
+                        radioButton1.Enabled = true;
+                        radioButton2.Enabled = true;
+                        radioButton3.Enabled = true;
+
+                        fnameBox.Enabled = true;
+                        lnameBox.Enabled = true;
+                        ssnBox.Enabled = true;
+
+                        submission.Enabled = true;
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("Error opening chosen file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        fileWriter.Close();
+
+                        savvy.Enabled = false;
+
+                        chooseFile.Enabled = true;
+
+                        radioButton1.Enabled = false;
+                        radioButton2.Enabled = false;
+                        radioButton3.Enabled = false;
+
+                        fnameBox.Enabled = false;
+                        lnameBox.Enabled = false;
+                        ssnBox.Enabled = false;
+
+                        submission.Enabled = false;
+                    }
+                }
+            }
+        }
+
+        private void savvy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                fileWriter.Close();
+                chooseFile.Enabled = true;
+                savvy.Enabled = false;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error saving file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void lode_Click(object sender, EventArgs e)
+        {
+            string bilePath = pathDis.Text;
+            outputBox.Items.Clear();
+            fileWriter.Close();
+
+            try
+            {
+                StreamReader reader = new StreamReader(bilePath);
+                string currentLine;
+                //MessageBox.Show("HA");
+                while ((currentLine = reader.ReadLine()) != null)
+                {
+                    int indexOfSlash = currentLine.IndexOf('/');
+                    string output = currentLine.Substring(indexOfSlash + 1) + " " + currentLine.Substring(0, indexOfSlash);
+                    outputBox.Items.Add(currentLine);
+                    //MessageBox.Show("IM ALIVE");
+                }
+                reader.Close();
+
+                submission.Enabled = false;
+                chooseFile.Enabled = true;
+                savvy.Enabled = false;
+                lode.Enabled = false;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Cannot read file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void X_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
