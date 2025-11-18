@@ -56,6 +56,8 @@
             savvy = new Button();
             lode = new Button();
             X = new Button();
+            fullOutBox = new ListBox();
+            outgoingBox = new ListBox();
             SuspendLayout();
             // 
             // fnameBox
@@ -248,7 +250,7 @@
             outputBox.ItemHeight = 15;
             outputBox.Location = new Point(330, 180);
             outputBox.Name = "outputBox";
-            outputBox.Size = new Size(400, 214);
+            outputBox.Size = new Size(260, 214);
             outputBox.TabIndex = 21;
             // 
             // chooseFile
@@ -299,11 +301,33 @@
             X.UseVisualStyleBackColor = true;
             X.Click += X_Click;
             // 
+            // fullOutBox
+            // 
+            fullOutBox.FormattingEnabled = true;
+            fullOutBox.HorizontalScrollbar = true;
+            fullOutBox.ItemHeight = 15;
+            fullOutBox.Location = new Point(605, 180);
+            fullOutBox.Name = "fullOutBox";
+            fullOutBox.Size = new Size(180, 184);
+            fullOutBox.TabIndex = 29;
+            // 
+            // outgoingBox
+            // 
+            outgoingBox.FormattingEnabled = true;
+            outgoingBox.HorizontalScrollbar = true;
+            outgoingBox.ItemHeight = 15;
+            outgoingBox.Location = new Point(605, 360);
+            outgoingBox.Name = "outgoingBox";
+            outgoingBox.Size = new Size(180, 34);
+            outgoingBox.TabIndex = 30;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(outgoingBox);
+            Controls.Add(fullOutBox);
             Controls.Add(X);
             Controls.Add(lode);
             Controls.Add(savvy);
@@ -367,5 +391,7 @@
         private Button deli;
         private Button lode;
         private Button X;
+        private ListBox fullOutBox;
+        private ListBox outgoingBox;
     }
 }

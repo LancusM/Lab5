@@ -120,7 +120,7 @@ namespace Lab5
                         SalaryEmployee worker1 = new SalaryEmployee(fnameBox.Text, lnameBox.Text, ssnBox.Text, Convert.ToDecimal(weeksaladBox.Text));
                         double weeklySalary = Convert.ToDouble(weeksaladBox.Text);
                         outputBox.Items.Add(worker1.ToString());
-                        fileWriter.WriteLine(firstName + "/" + lastName + "/" + SSN + "/" + weekSalary);
+                        fileWriter.WriteLine("Salary Employee/" + firstName + "/" + lastName + "/" + SSN + "/" + weekSalary);
                         fnameBox.Text = "";
                         lnameBox.Text = "";
                         ssnBox.Text = "";
@@ -141,7 +141,7 @@ namespace Lab5
                         double hoursWorked = Convert.ToDouble(hourBox.Text);
                         double wage = Convert.ToDouble(wageBox.Text);
                         outputBox.Items.Add(worker2.ToString());
-                        fileWriter.WriteLine(firstName + "/" + lastName + "/" + SSN + "/" + mage + "/" + hour);
+                        fileWriter.WriteLine("Hourly Employee/" + firstName + "/" + lastName + "/" + SSN + "/" + mage + "/" + hour);
                         fnameBox.Text = "";
                         lnameBox.Text = "";
                         ssnBox.Text = "";
@@ -163,7 +163,7 @@ namespace Lab5
                         double grossSales = Convert.ToDouble(grosssaladBox.Text);
                         double commissionRate = Convert.ToDouble(gordonBox.Text);
                         outputBox.Items.Add(worker3.ToString());
-                        fileWriter.WriteLine(firstName + "/" + lastName + "/" + SSN + "/" + gross + "/" + commission);
+                        fileWriter.WriteLine("Commission Employee/" + firstName + "/" + lastName + "/" + SSN + "/" + gross + "/" + commission);
                         fnameBox.Text = "";
                         lnameBox.Text = "";
                         ssnBox.Text = "";
@@ -279,9 +279,42 @@ namespace Lab5
                 while ((currentLine = reader.ReadLine()) != null)
                 {
                     int indexOfSlash = currentLine.IndexOf('/');
-                    string output = currentLine.Substring(indexOfSlash + 1) + " " + currentLine.Substring(0, indexOfSlash);
+                    string output = currentLine.Substring(0, indexOfSlash);
+                    int lastSlash = indexOfSlash;
                     outputBox.Items.Add(currentLine);
+                    fullOutBox.Items.Add(output);
+
+                    currentLine = currentLine.Substring(indexOfSlash + 1);
                     //MessageBox.Show("IM ALIVE");
+                    //print out to fullOutBox: employee name, type, and amount, per employee
+                    //then total outgoing pay for all employees in outgoingBox
+                    //string detailOutput = 
+
+                    /*
+                    while ((indexOfSlash = currentLine.Substring(lastSlash + 1).IndexOf("/")) != -1)
+                    {
+                        
+                        output = currentLine.Substring(lastSlash + 1,indexOfSlash);
+                        fullOutBox.Items.Add(output);
+                        lastSlash = indexOfSlash;
+                        MessageBox.Show("alive");
+                        
+                        
+                        
+                    }
+                    */
+
+                    while ((indexOfSlash = currentLine.IndexOf("/")) != -1)
+                    {
+
+                        output = currentLine.Substring(0, indexOfSlash);
+                        fullOutBox.Items.Add(output);
+                        MessageBox.Show("alive");
+                        currentLine = currentLine.Substring(indexOfSlash + 1);
+                    }
+
+                    fullOutBox.Items.Add(currentLine);
+
                 }
                 reader.Close();
 
