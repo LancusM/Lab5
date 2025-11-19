@@ -309,7 +309,7 @@ namespace Lab5
 
                         output = currentLine.Substring(0, indexOfSlash);
                         fullOutBox.Items.Add(output);
-                        MessageBox.Show("alive");
+                        //MessageBox.Show("alive");
                         currentLine = currentLine.Substring(indexOfSlash + 1);
                     }
 
